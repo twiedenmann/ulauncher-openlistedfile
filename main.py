@@ -27,13 +27,17 @@ class OpenlistedfileExtension(Extension):
     def parse_config(self):
         home = expanduser("~")
         hosts = []
+        cleanConfigFile = self.configfile.replace("~", home)
+        logger.debug("Reading config file = " + cleanConfigFile)
 
         try:
-            with open(extension.configfile, "r") as config:
+            with open(cleanConfigFile, "r") as config:
                 for line in config:
-                    line_lc = line.lower()
-                    logger.debug("File = '{}'", line_lc)
-                    hosts.append(line_lc.strip("host").strip("\n").strip())
+                    myfile = line.strip("\n").strip()
+
+                    if len(myfile) > 1:
+                        #logger.debug("File = " + myfile)
+                        hosts.append(myfile)
 
         except:
             logger.debug("config not found!")
@@ -41,16 +45,14 @@ class OpenlistedfileExtension(Extension):
         return hosts
 
     def launch_file(self, addr):
-        logger.debug("Launching file " + addr)
-
-        if self.terminal:
-            subprocess.Popen(["xdg-open", addr])
+        #logger.debug("Launching file " + addr)
+        subprocess.Popen(["xdg-open", addr])
 
 class ItemEnterEventListener(EventListener):
 
     def on_event(self, event, extension):
         data = event.get_data()
-        extension.launch_terminal(data)
+        extension.launch_file(data)
 
 class PreferencesUpdateEventListener(EventListener):
 
@@ -80,16 +82,9 @@ class KeywordQueryEventListener(EventListener):
 
         for file in files:
             items.append(ExtensionResultItem(icon=icon,
-                                            name=file,
-                                            description="Open file '{}' ".format(file),
-                                            on_enter=ExtensionCustomAction(file, keep_app_open=False)))
-
-        # If there are no results, let the user connect to the specified server.
-        if len(items) <= 0:
-            items.append(ExtensionResultItem(icon=icon,
-                                            name=arg,
-                                            description="Open file {} ".format(arg),
-                                            on_enter=ExtensionCustomAction(arg, keep_app_open=False)))
+                                             name=file,
+                                             description="Open file '{}' ".format(file),
+                                             on_enter=ExtensionCustomAction(file, keep_app_open=False)))
 
         return RenderResultListAction(items)
 
