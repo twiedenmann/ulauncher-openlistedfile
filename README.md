@@ -2,7 +2,7 @@
 
 This is an experimental extension for [Ulauncher](https://ulauncher.io) which shows a list of files defined in a local config file and opens the selected.
 
-This is a easy way to have access to regular used files in ulauncher.
+This is an easy way to have access to regular used files in ulauncher.
 
 The config file (configurable, default '~/.config/openlistedfile.conf') has one entry per line:
 
