@@ -1,0 +1,26 @@
+{
+  "required_api_version": "^2.0.0",
+  "name": "Open listed file",
+  "description": "Opens a file from a custom list.",
+  "developer_name": "Timo Wiedenmann",
+	"icon": "images/icon.png",
+  "options": {
+	"query_debounce": 0.1
+  },
+  "preferences": [
+	{
+	  "id": "openlistedfile_keyword",
+	  "type": "keyword",
+	  "name": "Open listed file keyword",
+	  "description": "",
+	  "default_value": "open"
+	},
+	{
+		"id": "openlistedfile_file",
+		"type": "input",
+		"name": "File",
+		"description": "The file containing the list of files.",
+		"default_value": "~/.config/openlistedfile.conf"
+	}
+  ]
+}
