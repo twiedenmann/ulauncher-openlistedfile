@@ -32,6 +32,7 @@ class OpenlistedfileExtension(Extension):
             with open(extension.configfile, "r") as config:
                 for line in config:
                     line_lc = line.lower()
+                    logger.debug("File = '{}'", line_lc)
                     hosts.append(line_lc.strip("host").strip("\n").strip())
 
         except:
